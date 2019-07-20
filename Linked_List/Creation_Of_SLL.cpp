@@ -31,6 +31,8 @@ void insertAtEnd(Node **node_head, int element)
     //adding null to the next of new node.
     newNode->next = NULL;
 
+    Node *last = (*node_head);
+
     //if node is NULL
     if((*node_head) == NULL)
     {
@@ -39,29 +41,78 @@ void insertAtEnd(Node **node_head, int element)
     }
 
     //traversing the linked list
-    while((*node_head)->next != NULL)
+    while(last->next != NULL)
     {
-        (*node_head) = (*node_head)->next;
+        last = last->next;
     }
 
     //insertion at end
-    (*node_head)->next = newNode;
+    last->next = newNode;
+}
+
+void insertAtPos(Node **head_node, int pos)
+{
+    int count = 0, posFound = 0;
+    Node *newNode = new Node();
+    Node *temp = new Node();
+
+    Node *iter = (*head_node);
+
+    //insertinf value into newNode so that we can print the list.
+    newNode->data = 1000;
+    
+    //If list is empty.
+    if((*head_node) == NULL)
+    {
+        (*head_node) = newNode;
+        (*head_node)->next = NULL;
+    }
+
+    //size of the list.
+    while(iter != NULL)
+    {
+        iter = iter->next;
+        count++;
+    }
+
+    //cheking whether size is smaller than the position
+    if(count < pos)
+    {
+        std::cout << "Invalid Position enetered" << std::endl;
+        return;
+    }
+    else
+    {
+        iter = (*head_node);
+        while(iter != NULL)
+        {
+            posFound++;
+            if(posFound == pos)
+            {
+                temp->next = newNode;
+                newNode->next = iter;
+            }
+            temp = iter;
+            iter = iter->next;
+        }
+    }
+    
 }
 
 void printList(Node *head)
 {
     while(head != NULL)
     {
-        std::cout << head->data << std::endl;
+        std::cout << head->data << "\t";
         head = head->next;
     }
 }
 
 int main(int argc, char const *argv[])
 {
-    int options= 0, element = 0;
+    int options, element = 0, position = 0;
     Node *head = NULL;
-    while(options != 0)
+    do
     {
         std::cout << "Please select the following options to perform the respective actions..." << std::endl;
         std::cout << "1: Insert an Element into the linked list at the begining" << std::endl;
@@ -74,7 +125,6 @@ int main(int argc, char const *argv[])
         switch(options)
         {
             case 1:
-                std::cout << "input the data you want to insert at the beginning of the list" << std::endl;
                 std::cin >> element;
                 insertAtBeg(&head, element);
                 break;
@@ -83,8 +133,13 @@ int main(int argc, char const *argv[])
                 insertAtEnd(&head, element);
                 break;
             case 3:
+                std::cin >> position;
+                insertAtPos(&head, position);
+                std::cout << "Inserted successfully" << std::endl;
+                break;
             case 4:
                 printList(head);
+                std::cout << std::endl;
                 break;
             case 0:
                 std::cout << "O enetered.... exiting..." << std::endl;
@@ -92,6 +147,6 @@ int main(int argc, char const *argv[])
             default :
                 std::cout << "Invalid entry" << std::endl;
         }
-    }
+    }while(options != 0);
     return 0;
 }
