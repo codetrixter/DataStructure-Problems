@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 
 class Node
 {
@@ -9,18 +10,22 @@ class Node
 
 void deleteAtBeg(Node **head_node)
 {
+    Node *temp;
     if((*head_node) == NULL)
     {
         std::cout << "underflow" << std::endl;
     }
 
+    temp = (*head_node);
     (*head_node) = (*head_node)->next;
+    std::free(temp);
 }
 
 void deleteAtEnd(Node **head_node)
 {
     Node *iter = (*head_node);
-    Node *temp = (*head_node);
+    Node *prev = (*head_node);
+    Node *temp;
     if((*head_node) == NULL)
     {
         std::cout << "underflow" << std::endl;
@@ -28,26 +33,30 @@ void deleteAtEnd(Node **head_node)
 
     while(iter->next != NULL)
     {
-        temp = iter;
+        prev = iter;
         iter = iter->next;
     }
 
-    temp->next = NULL;
+    prev->next = NULL;
+    std::free(iter);
 }
 
 void deleteAtPos(Node **head_node, int pos)
 {
     Node *iterate = (*head_node);
-    Node *temp = (*head_node);
+    Node *prev = (*head_node);
+    Node *temp;
 
     while(((pos-1) != 0) && (iterate->next != NULL))
     {
-        temp = iterate;
+        prev = iterate;
         iterate = iterate->next;
         pos--;
     }
 
-    temp->next = iterate->next;    
+    temp = iterate;
+    prev->next = iterate->next;
+    std::free(temp);    
 }
 
 void printList(Node *head_node)
