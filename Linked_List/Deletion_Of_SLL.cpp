@@ -37,7 +37,17 @@ void deleteAtEnd(Node **head_node)
 
 void deleteAtPos(Node **head_node, int pos)
 {
-    
+    Node *iterate = (*head_node);
+    Node *temp = (*head_node);
+
+    while(((pos-1) != 0) && (iterate->next != NULL))
+    {
+        temp = iterate;
+        iterate = iterate->next;
+        pos--;
+    }
+
+    temp->next = iterate->next;    
 }
 
 void printList(Node *head_node)
