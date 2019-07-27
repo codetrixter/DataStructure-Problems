@@ -6,6 +6,7 @@ class Node
     public:
     int         data;
     Node        *next;
+    Node 		*previous;
 };
 
 void insertAtBeg(Node **head_ref, int element)
@@ -16,8 +17,9 @@ void insertAtBeg(Node **head_ref, int element)
     //insert data into the new node.
     newNode->data = element;
 
-    //make next of newNode point to start.
+    //make next of newNode point to previous value.
     newNode->next = (*head_ref);
+    newNode->previous = (*head_ref);
 
     //make newNode as a start.
     (*head_ref) = newNode;
@@ -47,16 +49,16 @@ void insertAtEnd(Node **node_head, int element)
     }
 
     //insertion at end
+    newNode->previous = last;
     last->next = newNode;
+
 }
 
 void insertAtPos(Node **head_node, int pos)
 {
     int count = 0, posFound = 0;
     Node *newNode = new Node();
-    Node *temp = new Node();
-
-    Node *iter = (*head_node);
+    Node *iterate = (*head_node);
 
     //insertinf value into newNode so that we can print the list.
     newNode->data = 1000;
@@ -66,36 +68,20 @@ void insertAtPos(Node **head_node, int pos)
     {
         (*head_node) = newNode;
         (*head_node)->next = NULL;
+        (*head_node)->previous = NULL;
     }
 
-    //size of the list.
-    while(iter != NULL)
+    while(((pos-1) != 0) && (iterate->next != NULL))
     {
-        iter = iter->next;
-        count++;
+    	iterate = iterate->next;
+    	pos--;
     }
 
-    //cheking whether size is smaller than the position
-    if(count < pos)
-    {
-        std::cout << "Invalid Position enetered" << std::endl;
-        return;
-    }
-    else
-    {
-        iter = (*head_node);
-        while(iter != NULL)
-        {
-            posFound++;
-            if(posFound == pos)
-            {
-                temp->next = newNode;
-                newNode->next = iter;
-            }
-            temp = iter;
-            iter = iter->next;
-        }
-    }
+    //now the pointer is pointing to the node at the given position.
+    newNode->next = iterate;
+    newNode->previous = iterate->previous;
+    iterate->previous->next = newNode;
+    iterate->previous = newNode;
     
 }
 
@@ -114,7 +100,7 @@ int main(int argc, char const *argv[])
     Node *head = NULL;
     do
     {
-        std::cout << "Please select the following options to perform the respective actions on Singly Linked List..." << std::endl;
+        std::cout << "Please select the following options to perform the respective actions on Doubly Linked List..." << std::endl;
         std::cout << "1: Insert an Element into the linked list at the begining" << std::endl;
         std::cout << "2: Insert an Element into the linked list at the end" << std::endl;
         std::cout << "3: Insert an Element into the linked list at the given location" << std::endl;

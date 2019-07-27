@@ -12,100 +12,112 @@ void insertAtBeg(Node **head_ref, int element)
 {
     //allocate a new node.
     Node *newNode = new Node();
+    Node *iterate = (*head_ref);
+    Node *first = (*head_ref);
 
     //insert data into the new node.
     newNode->data = element;
 
-    //make next of newNode point to start.
+    if((*head_ref) == NULL)
+    {
+        newNode->next = newNode;
+        (*head_ref) = newNode;
+        return;
+    }
+
+    //changing the last pointer's next as beg has been updated.
+    while(iterate->next != first)
+    {
+        iterate = iterate->next;
+    }
+    iterate->next = newNode;
+    
+    //updating the first node
     newNode->next = (*head_ref);
 
     //make newNode as a start.
     (*head_ref) = newNode;
+
 }
 
 void insertAtEnd(Node **node_head, int element)
 {
     Node *newNode = new Node();
+    Node *first = (*node_head);
 
     newNode->data = element;
     //adding null to the next of new node.
-    newNode->next = NULL;
+    newNode->next = first;
 
-    Node *last = (*node_head);
+    Node *iterate = (*node_head);
 
     //if node is NULL
     if((*node_head) == NULL)
     {
+        newNode->next = newNode;
         (*node_head) = newNode;
         return;
     }
 
     //traversing the linked list
-    while(last->next != NULL)
+    while(iterate->next != first)
     {
-        last = last->next;
+        iterate = iterate->next;
     }
 
     //insertion at end
-    last->next = newNode;
+    iterate->next = newNode;
 }
 
 void insertAtPos(Node **head_node, int pos)
 {
-    int count = 0, posFound = 0;
     Node *newNode = new Node();
-    Node *temp = new Node();
+    Node *first = (*head_node);
+    Node *prev = (*head_node);
 
-    Node *iter = (*head_node);
-
-    //insertinf value into newNode so that we can print the list.
     newNode->data = 1000;
-    
-    //If list is empty.
-    if((*head_node) == NULL)
+
+    Node *iterate = (*head_node);
+    Node *iterate2 = (*head_node);
+
+    if(pos == 1)
     {
+        //changing the last pointer's next as beg has been updated.
+        while(iterate2->next != first)
+        {
+            iterate2 = iterate2->next;
+        }
+        iterate2->next = newNode;
+        
+        //updating the first node
+        newNode->next = (*head_node);
+
+        //make newNode as a start.
         (*head_node) = newNode;
-        (*head_node)->next = NULL;
-    }
 
-    //size of the list.
-    while(iter != NULL)
-    {
-        iter = iter->next;
-        count++;
-    }
-
-    //cheking whether size is smaller than the position
-    if(count < pos)
-    {
-        std::cout << "Invalid Position enetered" << std::endl;
         return;
     }
-    else
+
+    while(((pos-1) != 0) && (iterate->next != first))
     {
-        iter = (*head_node);
-        while(iter != NULL)
-        {
-            posFound++;
-            if(posFound == pos)
-            {
-                temp->next = newNode;
-                newNode->next = iter;
-            }
-            temp = iter;
-            iter = iter->next;
-        }
+        prev = iterate;
+        iterate = iterate->next;
+        pos--;
     }
-    
+
+    prev->next = newNode;
+    newNode->next = iterate;   
 }
 
 void printList(Node *head)
 {
-    while(head != NULL)
+    Node *temp = head;
+
+    do
     {
-        std::cout << head->data << "\t";
-        head = head->next;
-    }
+        std::cout << temp->data << "\t";
+        temp = temp->next;
+    }while(temp != head);
 }
 
 int main(int argc, char const *argv[])
@@ -114,11 +126,11 @@ int main(int argc, char const *argv[])
     Node *head = NULL;
     do
     {
-        std::cout << "Please select the following options to perform the respective actions on Singly Linked List..." << std::endl;
+        std::cout << "Please select the following options to perform the respective actions on Circular Linked List..." << std::endl;
         std::cout << "1: Insert an Element into the linked list at the begining" << std::endl;
         std::cout << "2: Insert an Element into the linked list at the end" << std::endl;
         std::cout << "3: Insert an Element into the linked list at the given location" << std::endl;
-        std::cout << "4: Print the linked liist" << std::endl;
+        std::cout << "4: Print the linked list" << std::endl;
         std::cout << "0: Exit" << std::endl;
         std::cin >> options;
 

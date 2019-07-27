@@ -10,14 +10,25 @@ class Node
 
 void deleteAtBeg(Node **head_node)
 {
-    Node *temp;
+    Node *temp = new Node();
+    Node *iterate = (*head_node);
+    Node *first = (*head_node);
+
     if((*head_node) == NULL)
     {
         std::cout << "underflow" << std::endl;
     }
 
+    //updating the last node's next pointer.
+    while(iterate->next != first)
+    {
+        iterate = iterate->next;
+    }
+
     temp = (*head_node);
-    (*head_node) = (*head_node)->next;
+    iterate->next = first->next;
+    (*head_node) = first->next;
+
     std::free(temp);
 }
 
@@ -25,19 +36,20 @@ void deleteAtEnd(Node **head_node)
 {
     Node *iter = (*head_node);
     Node *prev = (*head_node);
-    Node *temp;
+    Node *first = (*head_node);
+    // /Node *temp = new node();
     if((*head_node) == NULL)
     {
         std::cout << "underflow" << std::endl;
     }
 
-    while(iter->next != NULL)
+    while(iter->next != first)
     {
         prev = iter;
         iter = iter->next;
     }
 
-    prev->next = NULL;
+    prev->next = first;
     std::free(iter);
 }
 
@@ -59,40 +71,44 @@ void deleteAtPos(Node **head_node, int pos)
     std::free(temp);    
 }
 
-void printList(Node *head_node)
+void printList(Node *head)
 {
-    while(head_node != NULL)
+    Node *temp = head;
+
+    do
     {
-        std::cout << head_node->data << "\t";
-        head_node = head_node->next;
-    }
+        std::cout << temp->data << "\t";
+        temp = temp->next;
+    }while(temp != head);
 }
 
 void insertAtEnd(Node **node_head, int element)
 {
     Node *newNode = new Node();
+    Node *first = (*node_head);
 
     newNode->data = element;
     //adding null to the next of new node.
-    newNode->next = NULL;
+    newNode->next = first;
 
-    Node *last = (*node_head);
+    Node *iterate = (*node_head);
 
     //if node is NULL
     if((*node_head) == NULL)
     {
+        newNode->next = newNode;
         (*node_head) = newNode;
         return;
     }
 
     //traversing the linked list
-    while(last->next != NULL)
+    while(iterate->next != first)
     {
-        last = last->next;
+        iterate = iterate->next;
     }
 
     //insertion at end
-    last->next = newNode;
+    iterate->next = newNode;
 }
 
 int main(int argc, char const *argv[])
@@ -101,11 +117,11 @@ int main(int argc, char const *argv[])
     Node *head = NULL;
     do
     {
-        std::cout << "Please select the following options to perform the respective actions on Singly Linked List..." << std::endl;
+        std::cout << "Please select the following options to perform the respective actions on Circular Linked List..." << std::endl;
         std::cout << "1: Delete an Element into the linked list at the begining" << std::endl;
         std::cout << "2: Delete an Element into the linked list at the end" << std::endl;
         std::cout << "3: Delete an Element into the linked list at the given location" << std::endl;
-        std::cout << "4: Print the linked liist" << std::endl;
+        std::cout << "4: Print the linked list" << std::endl;
         std::cout << "5: Insert the element into the LL at the end" << std::endl;
         std::cout << "0: Exit" << std::endl;
         std::cin >> options;

@@ -6,11 +6,13 @@ class Node
     public:
     int data;
     Node *next;
+    Node *previous;
 };
 
 void deleteAtBeg(Node **head_node)
 {
-    Node *temp;
+    Node *temp = new Node();
+
     if((*head_node) == NULL)
     {
         std::cout << "underflow" << std::endl;
@@ -18,14 +20,14 @@ void deleteAtBeg(Node **head_node)
 
     temp = (*head_node);
     (*head_node) = (*head_node)->next;
+    (*head_node)->previous = NULL;
     std::free(temp);
 }
 
 void deleteAtEnd(Node **head_node)
 {
     Node *iter = (*head_node);
-    Node *prev = (*head_node);
-    Node *temp;
+
     if((*head_node) == NULL)
     {
         std::cout << "underflow" << std::endl;
@@ -33,30 +35,27 @@ void deleteAtEnd(Node **head_node)
 
     while(iter->next != NULL)
     {
-        prev = iter;
         iter = iter->next;
     }
 
-    prev->next = NULL;
+    iter->previous->next = NULL;
     std::free(iter);
 }
 
 void deleteAtPos(Node **head_node, int pos)
 {
     Node *iterate = (*head_node);
-    Node *prev = (*head_node);
-    Node *temp;
+    Node *temp = new Node();
 
     while(((pos-1) != 0) && (iterate->next != NULL))
     {
-        prev = iterate;
         iterate = iterate->next;
         pos--;
     }
 
-    temp = iterate;
-    prev->next = iterate->next;
-    std::free(temp);    
+    iterate->previous->next = iterate->next;
+    iterate->next->previous = iterate->previous;
+    std::free(iterate);    
 }
 
 void printList(Node *head_node)
@@ -92,7 +91,9 @@ void insertAtEnd(Node **node_head, int element)
     }
 
     //insertion at end
+    newNode->previous = last;
     last->next = newNode;
+
 }
 
 int main(int argc, char const *argv[])
