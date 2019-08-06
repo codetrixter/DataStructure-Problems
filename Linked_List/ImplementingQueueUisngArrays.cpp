@@ -11,7 +11,7 @@ class Queueing
     public:
         void enqueue(int arr[], int item)
         {
-            if(((front = 0) && (rear = (MAX-1))) || (front = rear + 1))
+            if(((front == 0) && (rear == (MAX-1))) || (front == rear + 1))
             {
                 std::cout << "Overflow" << std::endl;
                 return;
@@ -33,7 +33,7 @@ class Queueing
 
         void dequeue(int arr[])
         {
-            if(front = -1)
+            if(front == -1)
             {
                 std::cout << "Underflow" << std::endl;
                 return; 
