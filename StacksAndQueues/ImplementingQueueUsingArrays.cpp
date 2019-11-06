@@ -1,6 +1,6 @@
 #include <iostream>
 
-#define MAX 20
+#define MAX 5
 
 class Queueing
 {
@@ -70,7 +70,7 @@ class Queueing
             }
             else if(rear == (MAX-1))
             {
-                for(int ind = 0; ind < MAX; ++ind)
+                for(int ind = front; ind < MAX; ++ind)
                 {
                     std::cout << arr[ind] << "\t";
                 }
@@ -89,7 +89,7 @@ int main(int argc, char const *argv[])
     {
         std::cout << "Please select the following options to perform the respective actions on Queue..." << std::endl;
         std::cout << "1: Insert an Element into the Queue" << std::endl;
-        std::cout << "2: Insert an Element into the Queue" << std::endl;
+        std::cout << "2: Delete an Element from the Queue" << std::endl;
         std::cout << "3: Print the Queue" << std::endl;
         std::cout << "0: Exit" << std::endl;
         std::cin >> options;
