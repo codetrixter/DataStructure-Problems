@@ -11,7 +11,7 @@ class CircularQueue
 
     void enqueue(int arr[], int element)
     {
-        if(((rear == (MAX-1)) && (front == 0)) || (rear+1 == front) )
+        if(((rear == (MAX-1)) && (front == 0)) || (rear+1 == front) )   //checks for when (nothing is deleted/something is deleted).
         {
             std::cout << "Overflow..." << std::endl;
             return;
@@ -41,7 +41,7 @@ class CircularQueue
             std::cout << "Underflow..." << std::endl;
             return; 
         }
-        else if(front == rear)
+        else if(front == rear)  //only one element in q.
         {
             arr[front] = 0;
             front = rear = -1;

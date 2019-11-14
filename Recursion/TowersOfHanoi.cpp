@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
     std::cout << "Enter the Total pegs for Towers of Hanoi problem:: " << std::endl;
     std::cin >> initialTotalPegs;
 
-    Hanoi(initialTotalPegs, 'A', 'B', 'C');
+    Hanoi(initialTotalPegs, 'A', 'C', 'B');
 
     return 0;
 }
