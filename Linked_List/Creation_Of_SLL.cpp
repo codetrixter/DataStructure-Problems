@@ -16,7 +16,7 @@ void insertAtBeg(Node **head_ref, int element)
     //insert data into the new node.
     newNode->data = element;
 
-    //make next of newNode point to start.
+    //make next of newNode point to start which is pointing to null.
     newNode->next = (*head_ref);
 
     //make newNode as a start.
